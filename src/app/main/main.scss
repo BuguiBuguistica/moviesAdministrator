@@ -1,0 +1,25 @@
+.pull-row-top{
+    margin-top:40px
+}
+.pull-top-filter{
+    margin-top:5px;
+}
+
+.input-group-addon{
+    top:0
+}
+
+.form input.ng-invalid.ng-touched, 
+.form input.ng-invalid.submited, 
+.form input.invalid,
+.form select.invalid {
+    border: 1px solid mediumvioletred;
+}
+
+.bg-danger{
+    margin-top:10px;
+    padding:10px;
+    .errorMessage{
+        font-size: 0.9em;
+    }
+}

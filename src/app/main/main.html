@@ -1,0 +1,114 @@
+<acme-navbar></acme-navbar>
+<div class="container main">
+  <section class="row">
+
+    <div class="col-md-7 col-xs-12">
+      <h2>{{::main.labels.tl_genres}}</h2>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th class="col-xs-7">{{::main.labels.tb_genre_col1}} <span class="glyphicon glyphicon-chevron-down" ng-click="main.Genre.reverse()"></span></th>
+            <th class="col-xs-3">{{::main.labels.tb_genre_col2}}</th>
+            <th class="col-xs-2"></th>
+          </tr>
+          <tbody>
+            <tr ng-repeat="genre in main.genres | filter:main.genreFilter:strict">
+              <td>{{genre.name}}</td>
+              <td>{{genre.num}}</td>
+              <td><span class="glyphicon glyphicon-trash" ng-click="main.Genre.remove(genre)"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-5 col-xs-12 pull-top-filter">
+      <h3>{{::main.labels.tl_filters}}</h3>
+      <div class="input-group">
+        <input type="text" class="form-control" id="searchNameGenre" placeholder="Search Name" ng-model="main.genreFilter.name">
+        <div class="input-group-addon glyphicon glyphicon-refresh" ng-click="main.genreFilter.name = ''"></div>
+      </div>
+      <h4>{{::main.labels.tl_actions}}</h4>
+      <button type="button" class="btn btn-primary" ng-click="main.open('addGenre')">{{::main.labels.btn_add_genre}}</button>
+    </div>
+  </section>
+  <section class="row pull-row-top">
+    <div class="col-md-7 col-xs-12">
+      <h2>{{::main.labels.tl_movies}}</h2>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tr>
+            <th class="col-xs-7">{{::main.labels.tb_movie_col1}} <span class="glyphicon glyphicon-chevron-down" ng-click="main.Movie.reverse()"></th>
+            <th class="col-xs-3">{{::main.labels.tb_movie_col2}}</th>
+            <th class="col-xs-2"></th>
+          </tr>
+          <tbody>
+            <tr ng-repeat="movie in main.movies | filter:main.movieFilter:strict">
+              <td>{{movie.title}}</td>
+              <td>{{movie.genre}}</td>
+              <td><span class="glyphicon glyphicon-trash" ng-click="main.Movie.remove(movie)"></span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-5 col-xs-12 pull-top-filter">
+      <h3>{{::main.labels.tl_filters}}</h3>
+      <div class="input-group">
+        <input type="text" class="form-control" id="searchTitleMovie" placeholder="Search Title" ng-model="main.movieFilter.title">
+        <div class="input-group-addon glyphicon glyphicon-refresh" ng-click="main.movieFilter.title = ''"></div>
+      </div>
+      <h4>{{::main.labels.tl_actions}}</h4>
+      <button ng-disabled="!main.genres.length" type="button" class="btn btn-primary" ng-click="main.open('addMovie')">{{::main.labels.btn_add_mov}}</button>
+    </div>
+  </section>
+
+  <script type="text/ng-template" id="createGenreModal.html">
+        <header class="modal-header">
+            <h3 class="modal-title" id="modal-title">Create Genre</h3>
+        </header>
+        <form class="form" name="form" novalidate>
+        <section class="modal-body" id="modal-body">
+          
+            <div class="form-group>
+              <label for="name">Name</label>
+              <input ng-change="$ctrl.cleanInputs('gName')" name="gName" class="form-control" type="text" required ng-model="$ctrl.model.genre.name">
+              <div ng-show="$ctrl.invalid" class="bg-danger" ng-show="form.$submitted || form.gName.$touched || $ctrl.invalid">
+                  <div class="errorMessage" >{{$ctrl.errorMessage}}</div>
+              </div>
+            </div>            
+        </section>
+        <footer class="modal-footer">
+            <button type="submit" class="btn btn-primary" type="button" ng-click="$ctrl.ok()" >{{::$ctrl.labels.btn_create}}</button>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">{{::$ctrl.labels.btn_close}}</button>
+        </footer>
+        </form>            
+    </script>
+
+<script type="text/ng-template" id="createMovieModal.html">
+        <header class="modal-header">
+            <h3 class="modal-title" id="modal-title">Create Movie</h3>
+        </header>
+        <form novalidate class="form" name="form"> 
+        <section class="modal-body" id="modal-body">
+            <div class="form-group">
+              <label for="name">Title</label>
+              <input ng-change="$ctrl.cleanInputs('mTitle')" ng-class="{submited:form.$submitted}" name="mTitle" class="form-control" type="text" ng-model="$ctrl.model.movie.title" required>              
+            </div>
+            <div class="form-group">
+              <label for="genre">Genre</label>
+              <select ng-change="$ctrl.cleanInputs('mGenre')" name="mGenre" class="form-control" id="singleSelect" ng-model="$ctrl.model.movie.genre" required>
+                  <option value="">---Please select---</option> <!-- not selected / blank option -->
+                  <option ng-repeat="option in $ctrl.model.genres" value="{{option.name}}">{{option.name}}</option>
+                </select>
+            </div>
+            <div ng-show="$ctrl.invalid" class="bg-danger" ng-show="form.$submitted || form.mTitle.$touched || $ctrl.invalid" || form.mGenre.$touched>
+               <div class="errorMessage" >{{$ctrl.errorMessage}}</div>
+            </div>
+        </section>
+        <footer class="modal-footer">
+            <input type="submit" class="btn btn-primary" type="button" ng-click="$ctrl.ok()" value="{{::$ctrl.labels.btn_create}}"></input>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">{{::$ctrl.labels.btn_close}}</button>
+        </footer>
+        </form> 
+    </script>
+</div>
